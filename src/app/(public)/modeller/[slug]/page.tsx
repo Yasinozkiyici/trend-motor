@@ -311,9 +311,9 @@ export default async function MotorcycleDetailPage({
             backgroundSize: '60px 60px',
           }}
         ></div>
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 relative">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-16 relative">
           {/* Breadcrumb */}
-          <div className="mb-8">
+          <div className="mb-6 md:mb-8">
             <Link
               href="/modeller"
               className="inline-flex items-center text-sm text-blue-200 hover:text-white transition-colors"
@@ -323,9 +323,9 @@ export default async function MotorcycleDetailPage({
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Content */}
-            <div className="space-y-6">
+            <div className="space-y-4 md:space-y-6">
               {/* Brand */}
               {motorcycle.brand ? (
                 <Link
@@ -341,13 +341,13 @@ export default async function MotorcycleDetailPage({
               )}
 
               {/* Title */}
-              <h1 className="text-4xl lg:text-5xl font-bold leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
                 {motorcycle.name}
               </h1>
 
               {/* Subtitle */}
               {motorcycle.subtitle && (
-                <p className="text-xl text-blue-100">{motorcycle.subtitle}</p>
+                <p className="text-lg md:text-xl text-blue-100">{motorcycle.subtitle}</p>
               )}
 
               {/* Badges */}
@@ -373,7 +373,7 @@ export default async function MotorcycleDetailPage({
               </div>
 
               {/* Price */}
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl">
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/20 shadow-2xl">
                 <div className="flex items-center justify-between mb-4">
                   <p className="text-blue-200 text-sm font-medium">Başlangıç Fiyatı</p>
                   <div className="flex items-center space-x-2">
@@ -381,30 +381,30 @@ export default async function MotorcycleDetailPage({
                     <span className="text-green-400 text-sm font-medium">Garantili</span>
                   </div>
                 </div>
-                <p className="text-5xl font-bold text-white mb-2">
+                <p className="text-3xl md:text-5xl font-bold text-white mb-2">
                   {formatPrice(motorcycle.basePrice, motorcycle.currency)}
                 </p>
                 <p className="text-blue-200 text-sm">KDV Dahil • Taksit İmkanı</p>
               </div>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col gap-3 md:flex-row md:gap-4">
                 <a
                   href="https://wa.me/905321525145?text=Merhaba, bu motor hakkında bilgi almak istiyorum:"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold text-lg py-4 px-6 rounded-xl transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold text-base md:text-lg py-3 md:py-4 px-4 md:px-6 rounded-xl transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   disabled={motorcycle.stockStatus === 'out_of_stock'}
                 >
-                  <MessageSquare className="w-5 h-5 mr-2" />
-                  {motorcycle.stockStatus === 'out_of_stock' ? 'Stokta Yok' : 'WhatsApp ile İletişim'}
+                  <MessageSquare className="w-4 h-4 md:w-5 md:h-5 mr-2" />
+                  <span className="text-sm md:text-base">{motorcycle.stockStatus === 'out_of_stock' ? 'Stokta Yok' : 'WhatsApp ile İletişim'}</span>
                 </a>
                 <Link
                   href="/iletisim"
-                  className="flex-1 border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold text-lg py-4 px-6 rounded-xl transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                  className="flex-1 border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold text-base md:text-lg py-3 md:py-4 px-4 md:px-6 rounded-xl transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
                 >
-                  <Car className="w-5 h-5 mr-2" />
-                  Test Sürüşü
+                  <Car className="w-4 h-4 md:w-5 md:h-5 mr-2" />
+                  <span className="text-sm md:text-base">Test Sürüşü</span>
                 </Link>
               </div>
             </div>
@@ -448,34 +448,34 @@ export default async function MotorcycleDetailPage({
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-16">
         {/* Description */}
         {motorcycle.description && (
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 mb-16">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Hakkında</h2>
-            <p className="text-gray-600 leading-relaxed text-lg">{motorcycle.description}</p>
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8 mb-8 md:mb-16">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6">Hakkında</h2>
+            <p className="text-gray-600 leading-relaxed text-base md:text-lg">{motorcycle.description}</p>
           </div>
         )}
 
         {/* Specifications */}
         {Object.keys(groupedSpecs).length > 0 && (
-          <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-xl border border-gray-200 p-10 mb-16">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">Teknik Özellikler</h2>
+          <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-xl border border-gray-200 p-6 md:p-10 mb-8 md:mb-16">
+            <div className="text-center mb-8 md:mb-12">
+              <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-4">Teknik Özellikler</h2>
               <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-blue-800 mx-auto rounded-full"></div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
               {Object.entries(groupedSpecs).map(([category, specs]) => (
-                <div key={category} className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-shadow duration-300">
-                  <h3 className="text-xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-blue-600 flex items-center">
+                <div key={category} className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6 hover:shadow-xl transition-shadow duration-300">
+                  <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4 md:mb-6 pb-3 border-b-2 border-blue-600 flex items-center">
                     <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
                     {category}
                   </h3>
-                  <div className="space-y-4">
+                  <div className="space-y-3 md:space-y-4">
                     {specs.map((spec) => (
-                      <div key={spec.id} className="flex justify-between items-center py-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 rounded-lg px-2 -mx-2 transition-colors">
-                        <span className="text-gray-700 font-medium text-sm">{spec.name}</span>
-                        <span className="font-bold text-gray-900 text-right text-sm bg-blue-50 px-3 py-1 rounded-full">{spec.value}</span>
+                      <div key={spec.id} className="flex justify-between items-center py-3 md:py-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 rounded-lg px-2 -mx-2 transition-colors">
+                        <span className="text-gray-700 font-medium text-xs md:text-sm">{spec.name}</span>
+                        <span className="font-bold text-gray-900 text-right text-xs md:text-sm bg-blue-50 px-2 md:px-3 py-1 rounded-full">{spec.value}</span>
                       </div>
                     ))}
                   </div>

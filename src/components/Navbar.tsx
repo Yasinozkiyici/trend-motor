@@ -208,15 +208,15 @@ export default function Navbar({ cartCount: _cartCount = 0 }: NavbarProps) {
             </form>
           )}
 
-          <div className="flex items-center gap-3 overflow-x-auto pb-3">
+          <div className="flex items-center gap-4 overflow-x-auto pb-4 scrollbar-hide">
             {brandLinks.map((brand) => (
               <Link
                 key={brand.alt}
                 href={brand.href}
-                className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
+                className="inline-flex items-center gap-3 rounded-full border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 whitespace-nowrap min-w-fit"
               >
-                <Image src={brand.src} alt={brand.alt} width={24} height={24} className="h-6 w-auto" />
-                <span>{brand.alt}</span>
+                <Image src={brand.src} alt={brand.alt} width={28} height={28} className="h-7 w-auto" />
+                <span className="text-sm">{brand.alt}</span>
               </Link>
             ))}
           </div>

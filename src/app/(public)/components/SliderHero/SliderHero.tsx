@@ -41,7 +41,7 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
     <section 
       className={cn(
         "relative w-full overflow-hidden",
-        "h-[72vh] lg:h-[816px]", // %20 artırıldı (60vh -> 72vh, 680px -> 816px)
+        "h-[50vh] sm:h-[60vh] md:h-[72vh] lg:h-[816px]", // Mobil için daha küçük yükseklik
         "bg-white" // Beyaz arkaplan
       )}
       role="region"
@@ -50,8 +50,8 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
       onKeyDown={handleKeyDown}
       tabIndex={0}
     >
-      {/* Embla viewport + gutters - 2cm (76px) boşluk */}
-      <div className="relative h-full pl-[clamp(76px,8vw,152px)] pr-[clamp(76px,8vw,152px)]">
+      {/* Embla viewport + responsive gutters */}
+      <div className="relative h-full pl-[clamp(16px,4vw,76px)] pr-[clamp(16px,4vw,76px)] md:pl-[clamp(76px,8vw,152px)] md:pr-[clamp(76px,8vw,152px)]">
         <div className="embla h-full" ref={emblaRef}>
           <div className="embla__container h-full flex">
             {slides.map((slide, index) => (

@@ -129,17 +129,17 @@ export default function ProductCard({
       </Link>
 
       {/* İçerik - Kurumsal ve Sade */}
-      <div className="p-4 space-y-3">
+      <div className="p-3 md:p-4 space-y-2 md:space-y-3">
         {/* Marka - minimal */}
         <Link href={`/modeller?brand=${brandSlug}`}>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-gray-400 font-medium">
+          <p className="text-[9px] md:text-[10px] uppercase tracking-[0.15em] text-gray-400 font-medium">
             {brandName}
           </p>
         </Link>
 
         {/* Model Adı - kurumsal */}
         <Link href={`/modeller/${slug}`}>
-          <h3 className="text-sm font-medium text-gray-900 line-clamp-1 leading-tight tracking-tight">
+          <h3 className="text-xs md:text-sm font-medium text-gray-900 line-clamp-1 leading-tight tracking-tight">
             {name}
           </h3>
         </Link>
@@ -151,13 +151,13 @@ export default function ProductCard({
         <div className="space-y-2">
           {/* Fiyat */}
           <div className="flex items-baseline justify-between">
-            <span className="text-lg font-semibold text-gray-900 tracking-tight">
+            <span className="text-sm md:text-lg font-semibold text-gray-900 tracking-tight">
               {formatPrice(basePrice, currency)}
             </span>
             
             {/* Minimal Stok Göstergesi */}
             {stockStatus === 'out_of_stock' && (
-              <span className="text-[9px] uppercase tracking-wider text-gray-400">
+              <span className="text-[8px] md:text-[9px] uppercase tracking-wider text-gray-400">
                 Tükendi
               </span>
             )}
@@ -166,10 +166,10 @@ export default function ProductCard({
           {/* WhatsApp Butonu - Kurumsal */}
           <button
             onClick={handleWhatsAppClick}
-            className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-gray-900 text-white text-xs font-medium uppercase tracking-wider hover:bg-gray-800 transition-colors duration-200"
+            className="w-full flex items-center justify-center gap-2 px-2 md:px-3 py-2 bg-gray-900 text-white text-[10px] md:text-xs font-medium uppercase tracking-wider hover:bg-gray-800 transition-colors duration-200"
             disabled={stockStatus === 'out_of_stock'}
           >
-            <MessageCircle className="w-3.5 h-3.5" />
+            <MessageCircle className="w-3 h-3 md:w-3.5 md:h-3.5" />
             <span>İletişime Geç</span>
           </button>
         </div>
