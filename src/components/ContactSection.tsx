@@ -87,22 +87,22 @@ export default function ContactSection() {
   }
 
   return (
-    <div className="py-16 bg-white contact-section">
+    <div className="py-8 md:py-16 bg-white contact-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Kurumsal Başlık */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-semibold text-gray-900 mb-4 tracking-tight">
+        <div className="text-center mb-8 md:mb-16">
+          <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-3 md:mb-4 tracking-tight">
             İLETİŞİM FORMU
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto font-light">
+          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto font-light">
             Sorularınız için bize ulaşın. Size en kısa sürede dönüş yapalım.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
           {/* İletişim Formu */}
           <div>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
               {/* İsim ve E-posta */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>

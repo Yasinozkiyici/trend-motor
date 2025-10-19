@@ -135,24 +135,24 @@ export default function Navbar({ cartCount: _cartCount = 0 }: NavbarProps) {
       {/* Mobil */}
       <div className="md:hidden">
         <div className="mx-auto max-w-[1600px] px-4">
-          <div className="flex items-center justify-between py-3">
-            <Link href="/" aria-label="Ana sayfa" className="flex items-center gap-2">
+          <div className="flex items-center justify-between py-4">
+            <Link href="/" aria-label="Ana sayfa" className="flex items-center gap-3">
               <Image
                 src="/logo.svg"
                 alt="Trend Motor"
-                width={36}
-                height={36}
-                className="h-9 w-auto"
+                width={40}
+                height={40}
+                className="h-10 w-auto"
                 priority
                 quality={100}
               />
-              <span className="text-lg font-semibold text-gray-900">Trend Motor</span>
+              <span className="text-lg font-bold text-gray-900">Trend Motor</span>
             </Link>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <button
                 onClick={() => setIsMobileSearchOpen((prev) => !prev)}
-                className="inline-flex size-10 items-center justify-center rounded-full border border-gray-200 text-gray-700 transition-colors hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2"
+                className="inline-flex size-11 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 transition-all duration-200 hover:bg-gray-50 hover:border-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 shadow-sm"
                 aria-label={isMobileSearchOpen ? 'Aramayı kapat' : 'Aramayı aç'}
               >
                 {isMobileSearchOpen ? <X className="size-5" aria-hidden="true" /> : <Search className="size-5" aria-hidden="true" />}
@@ -160,7 +160,7 @@ export default function Navbar({ cartCount: _cartCount = 0 }: NavbarProps) {
 
               <Link
                 href="/servis-noktalari"
-                className="inline-flex size-10 items-center justify-center rounded-full border border-gray-200 text-gray-700 transition-colors hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2"
+                className="inline-flex size-11 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 transition-all duration-200 hover:bg-gray-50 hover:border-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 shadow-sm"
                 aria-label="Servis noktaları"
               >
                 <Wrench className="size-5" aria-hidden="true" />
@@ -170,53 +170,56 @@ export default function Navbar({ cartCount: _cartCount = 0 }: NavbarProps) {
                 onClick={() => setIsLanguageOpen((prev) => !prev)}
                 aria-label="Dil seçimi"
                 aria-expanded={isLanguageOpen}
-                className="inline-flex size-10 items-center justify-center rounded-full border border-gray-200 text-gray-700 transition-colors hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2"
+                className="inline-flex size-11 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 transition-all duration-200 hover:bg-gray-50 hover:border-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 shadow-sm"
               >
                 <Image
                   src="/flag-tr.svg"
                   alt="Türkçe"
-                  width={20}
-                  height={20}
-                  className="h-5 w-auto rounded-sm object-cover"
+                  width={22}
+                  height={22}
+                  className="h-5.5 w-auto rounded-sm object-cover"
                 />
               </button>
             </div>
           </div>
 
           {isMobileSearchOpen && (
-            <form onSubmit={handleSearch} className="pb-3">
-              <label htmlFor="mobile-search" className="sr-only">
-                Motosiklet ara
-              </label>
-              <div className="relative">
-                <input
-                  id="mobile-search"
-                  type="search"
-                  value={searchQuery}
-                  onChange={(event) => setSearchQuery(event.target.value)}
-                  placeholder="Motosiklet ara..."
-                  className="h-11 w-full rounded-full border border-gray-200 bg-white pl-4 pr-10 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/40"
-                />
-                <button
-                  type="submit"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 transition-colors hover:text-gray-700"
-                  aria-label="Ara"
-                >
-                  <Search className="size-5" aria-hidden="true" />
-                </button>
-              </div>
-            </form>
+            <div className="pb-4">
+              <form onSubmit={handleSearch} className="relative">
+                <label htmlFor="mobile-search" className="sr-only">
+                  Motosiklet ara
+                </label>
+                <div className="relative">
+                  <input
+                    id="mobile-search"
+                    type="search"
+                    value={searchQuery}
+                    onChange={(event) => setSearchQuery(event.target.value)}
+                    placeholder="Motosiklet ara..."
+                    className="h-12 w-full rounded-2xl border-2 border-gray-200 bg-white pl-5 pr-12 text-base text-gray-900 placeholder:text-gray-500 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-600/20 shadow-sm"
+                    autoFocus
+                  />
+                  <button
+                    type="submit"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 transition-colors hover:text-blue-600 p-1 rounded-full hover:bg-blue-50"
+                    aria-label="Ara"
+                  >
+                    <Search className="size-5" aria-hidden="true" />
+                  </button>
+                </div>
+              </form>
+            </div>
           )}
 
-          <div className="flex items-center gap-4 overflow-x-auto pb-4 scrollbar-hide">
+          <div className="flex items-center gap-3 overflow-x-auto pb-4 scrollbar-hide">
             {brandLinks.map((brand) => (
               <Link
                 key={brand.alt}
                 href={brand.href}
-                className="inline-flex items-center gap-3 rounded-full border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 whitespace-nowrap min-w-fit"
+                className="inline-flex items-center justify-center rounded-full border border-gray-200 bg-white p-3 transition-colors hover:bg-gray-50 min-w-fit"
+                aria-label={brand.alt}
               >
-                <Image src={brand.src} alt={brand.alt} width={28} height={28} className="h-7 w-auto" />
-                <span className="text-sm">{brand.alt}</span>
+                <Image src={brand.src} alt={brand.alt} width={32} height={32} className="h-8 w-auto" />
               </Link>
             ))}
           </div>
