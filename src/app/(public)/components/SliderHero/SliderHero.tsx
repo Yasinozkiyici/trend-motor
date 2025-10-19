@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { SliderHeroSlide, SliderHeroSettings } from '../home-hero-provider';
 import QuickActionsRail from './QuickActionsRail';
+import { ProgressBar } from './ProgressBar';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
@@ -18,6 +19,10 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
     skipSnaps: false,
   });
 
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [progress, setProgress] = useState(0);
+
   const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
     if (!emblaApi) return;
     
@@ -30,8 +35,74 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
         event.preventDefault();
         emblaApi.scrollNext();
         break;
+      case ' ':
+        event.preventDefault();
+        setIsPlaying(!isPlaying);
+        break;
     }
+  }, [emblaApi, isPlaying]);
+
+  // Embla API event listeners
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const onSelect = () => {
+      setCurrentSlide(emblaApi.selectedScrollSnap());
+      setProgress(0);
+    };
+
+    emblaApi.on('select', onSelect);
+    onSelect(); // İlk yükleme için
+
+    return () => {
+      emblaApi.off('select', onSelect);
+    };
   }, [emblaApi]);
+
+  // Otomatik kayma efekti
+  useEffect(() => {
+    if (!emblaApi || !isPlaying) return;
+
+    let startTime = Date.now();
+    const duration = 6000; // 6 saniye
+
+    const updateProgress = () => {
+      const elapsed = Date.now() - startTime;
+      const progressPercent = Math.min((elapsed / duration) * 100, 100);
+      setProgress(progressPercent);
+
+      if (progressPercent >= 100) {
+        emblaApi.scrollNext();
+        startTime = Date.now();
+        setProgress(0);
+      }
+    };
+
+    const interval = setInterval(updateProgress, 50); // Her 50ms'de güncelle
+
+    return () => clearInterval(interval);
+  }, [emblaApi, isPlaying, currentSlide]);
+
+  // Mouse hover'da otomatik kaymayı duraklat
+  const handleMouseEnter = useCallback(() => {
+    setIsPlaying(false);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsPlaying(true);
+  }, []);
+
+  // Touch event'leri için otomatik kaymayı duraklat
+  const handleTouchStart = useCallback(() => {
+    setIsPlaying(false);
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    // Touch bittikten 3 saniye sonra tekrar başlat
+    setTimeout(() => {
+      setIsPlaying(true);
+    }, 3000);
+  }, []);
 
   if (!slides.length) {
     return null;
@@ -48,6 +119,10 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
       aria-label="Anasayfa vitrin"
       aria-roledescription="carousel"
       onKeyDown={handleKeyDown}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       tabIndex={0}
     >
       {/* Embla viewport + responsive gutters */}
@@ -149,6 +224,45 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
         </div>
       </div>
       
+      {/* Progress Bar */}
+      {slides.length > 1 && (
+        <div className="absolute bottom-16 left-0 right-0 z-30">
+          <div className="mx-auto max-w-md px-4">
+            <ProgressBar progress={progress} className="bg-black/20" />
+          </div>
+        </div>
+      )}
+
+      {/* Otomatik kayma kontrolü */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-30">
+        <button
+          onClick={() => setIsPlaying(!isPlaying)}
+          className={cn(
+            "flex items-center gap-2 px-3 py-2 rounded-full",
+            "bg-black/20 backdrop-blur-md text-white",
+            "hover:bg-black/30 transition-all duration-200",
+            "text-sm font-medium"
+          )}
+          aria-label={isPlaying ? "Otomatik kaymayı durdur" : "Otomatik kaymayı başlat"}
+        >
+          {isPlaying ? (
+            <>
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+              </svg>
+              <span className="hidden sm:inline">Durdur</span>
+            </>
+          ) : (
+            <>
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              <span className="hidden sm:inline">Oynat</span>
+            </>
+          )}
+        </button>
+      </div>
+
       {/* Quick Actions Rail */}
       <QuickActionsRail />
     </section>
