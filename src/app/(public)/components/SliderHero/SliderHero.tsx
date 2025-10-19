@@ -21,6 +21,7 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isUserInteracting, setIsUserInteracting] = useState(false);
 
+
   const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
     if (!emblaApi) return;
     
@@ -117,72 +118,54 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
         <div className="embla h-full" ref={emblaRef}>
           <div className="embla__container h-full flex">
             {slides.map((slide, index) => (
-              <div key={slide.id} className="embla__slide flex-[0_0_100%] min-w-0 relative h-full rounded-xl md:rounded-2xl overflow-hidden shadow-sm md:shadow-lg">
-                {/* RESPONSIVE GÖRSEL */}
-                <div className="absolute inset-0">
-                  {slide.desktopImageUrl || slide.mobileImageUrl ? (
+                <div key={slide.id} className="embla__slide flex-[0_0_100%] min-w-0 relative h-full rounded-xl md:rounded-2xl overflow-hidden shadow-sm md:shadow-lg">
+                  {/* RESPONSIVE GÖRSEL */}
+                  <div className="absolute inset-0">
+                    {slide.desktopImageUrl || slide.mobileImageUrl ? (
                     <>
-                      {/* Desktop görsel - Daha yüksek kalite ve optimize boyutlar */}
+                      {/* Desktop görsel */}
                       {slide.desktopImageUrl && (
-                        <Image
+                        <img
                           src={slide.desktopImageUrl}
                           alt={slide.alt || "Slide"}
-                        fill
-                        sizes="(min-width: 1024px) 84vw, (min-width: 768px) 90vw, 92vw"
-                        priority={index === 0}
-                        fetchPriority={index === 0 ? "high" : "auto"}
-                        quality={85}
-                        style={{ 
-                          objectFit: "cover", 
-                          objectPosition: "center center",
-                          width: "100%",
-                          height: "100%"
-                        }}
-                        placeholder="blur"
-                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                        className="hidden md:block"
+                          className="hidden md:block w-full h-full object-cover object-center"
+                          style={{ 
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "100%"
+                          }}
                         />
                       )}
-                      {/* Mobil görsel - Optimize edilmiş boyutlar */}
+                      {/* Mobil görsel */}
                       {slide.mobileImageUrl && (
-                        <Image
+                        <img
                           src={slide.mobileImageUrl}
                           alt={slide.alt || "Slide"}
-                          fill
-                          sizes="(max-width: 767px) 92vw, 0px"
-                          priority={index === 0}
-                          fetchPriority={index === 0 ? "high" : "auto"}
-                          quality={85}
+                          className="block md:hidden w-full h-full object-cover object-center"
                           style={{ 
-                            objectFit: "cover", 
-                            objectPosition: "center center",
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
                             width: "100%",
                             height: "100%"
                           }}
-                          placeholder="blur"
-                          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                          className="block md:hidden"
                         />
                       )}
-                      {/* Mobil görsel yoksa desktop görseli göster - Optimize edilmiş */}
+                      {/* Mobil görsel yoksa desktop görseli göster */}
                       {!slide.mobileImageUrl && slide.desktopImageUrl && (
-                        <Image
+                        <img
                           src={slide.desktopImageUrl}
                           alt={slide.alt || "Slide"}
-                          fill
-                          sizes="(max-width: 767px) 92vw, 0px"
-                          priority={index === 0}
-                          fetchPriority={index === 0 ? "high" : "auto"}
-                          quality={85}
+                          className="block md:hidden w-full h-full object-cover object-center"
                           style={{ 
-                            objectFit: "cover", 
-                            objectPosition: "center center",
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
                             width: "100%",
                             height: "100%"
                           }}
-                          placeholder="blur"
-                          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                          className="block md:hidden"
                         />
                       )}
                     </>
