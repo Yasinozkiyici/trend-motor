@@ -16,7 +16,8 @@ export default function QuickActionsRail() {
     <aside
       className={cn(
         "fixed right-0 top-1/3 z-40", // Sağa yapışık
-        "hidden md:flex flex-col gap-2"
+        "hidden md:flex flex-col gap-2", // Desktop'ta göster
+        "md:right-2 lg:right-4 xl:right-6" // Responsive positioning
       )}
       aria-label="Hızlı işlemler"
     >
@@ -39,7 +40,7 @@ function RailItem({ href, label, icon }: { href: string; label: string; icon: Re
       <Link
         href={href}
         className={cn(
-          "grid h-10 w-10 place-items-center",
+          "grid h-10 w-10 md:h-11 md:w-11 place-items-center",
           "rounded-md border border-neutral-300/60",
           "bg-neutral-900/40 text-neutral-100",
           "backdrop-blur-md shadow-sm",
@@ -53,7 +54,7 @@ function RailItem({ href, label, icon }: { href: string; label: string; icon: Re
       <Link
         href={href}
         className={cn(
-          "absolute right-10 top-0 h-10",
+          "absolute right-10 md:right-11 top-0 h-10 md:h-11",
           "overflow-hidden rounded-l-md border border-blue-400/60",
           "bg-blue-600/80 text-white",
           "backdrop-blur-md shadow-sm",
