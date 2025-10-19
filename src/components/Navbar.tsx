@@ -136,7 +136,7 @@ export default function Navbar({ cartCount: _cartCount = 0 }: NavbarProps) {
       <div className="md:hidden">
         <div className="mx-auto max-w-[1600px] px-4">
           <div className="flex items-center justify-between py-4">
-            <Link href="/" aria-label="Ana sayfa" className="flex items-center gap-3">
+            <Link href="/" aria-label="Ana sayfa" className="flex items-center">
               <Image
                 src="/logo.svg"
                 alt="Trend Motor"
@@ -146,7 +146,6 @@ export default function Navbar({ cartCount: _cartCount = 0 }: NavbarProps) {
                 priority
                 quality={100}
               />
-              <span className="text-lg font-bold text-gray-900">Trend Motor</span>
             </Link>
 
             <div className="flex items-center gap-3">

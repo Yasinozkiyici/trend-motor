@@ -22,6 +22,7 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
   const [isPlaying, setIsPlaying] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [isUserInteracting, setIsUserInteracting] = useState(false);
 
   const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
     if (!emblaApi) return;
@@ -29,18 +30,20 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
     switch (event.key) {
       case 'ArrowLeft':
         event.preventDefault();
+        setIsUserInteracting(true);
         emblaApi.scrollPrev();
+        // 5 saniye sonra otomatik kaymaya devam et
+        setTimeout(() => setIsUserInteracting(false), 5000);
         break;
       case 'ArrowRight':
         event.preventDefault();
+        setIsUserInteracting(true);
         emblaApi.scrollNext();
-        break;
-      case ' ':
-        event.preventDefault();
-        setIsPlaying(!isPlaying);
+        // 5 saniye sonra otomatik kaymaya devam et
+        setTimeout(() => setIsUserInteracting(false), 5000);
         break;
     }
-  }, [emblaApi, isPlaying]);
+  }, [emblaApi]);
 
   // Embla API event listeners
   useEffect(() => {
@@ -61,12 +64,14 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
 
   // Otomatik kayma efekti
   useEffect(() => {
-    if (!emblaApi || !isPlaying) return;
+    if (!emblaApi || isUserInteracting) return;
 
     let startTime = Date.now();
     const duration = 6000; // 6 saniye
 
     const updateProgress = () => {
+      if (isUserInteracting) return; // Kullanıcı etkileşimdeyse durdur
+      
       const elapsed = Date.now() - startTime;
       const progressPercent = Math.min((elapsed / duration) * 100, 100);
       setProgress(progressPercent);
@@ -81,27 +86,26 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
     const interval = setInterval(updateProgress, 50); // Her 50ms'de güncelle
 
     return () => clearInterval(interval);
-  }, [emblaApi, isPlaying, currentSlide]);
+  }, [emblaApi, isUserInteracting, currentSlide]);
 
   // Mouse hover'da otomatik kaymayı duraklat
   const handleMouseEnter = useCallback(() => {
-    setIsPlaying(false);
+    setIsUserInteracting(true);
   }, []);
 
   const handleMouseLeave = useCallback(() => {
-    setIsPlaying(true);
+    // Mouse çıktıktan 3 saniye sonra otomatik kaymaya devam et
+    setTimeout(() => setIsUserInteracting(false), 3000);
   }, []);
 
   // Touch event'leri için otomatik kaymayı duraklat
   const handleTouchStart = useCallback(() => {
-    setIsPlaying(false);
+    setIsUserInteracting(true);
   }, []);
 
   const handleTouchEnd = useCallback(() => {
-    // Touch bittikten 3 saniye sonra tekrar başlat
-    setTimeout(() => {
-      setIsPlaying(true);
-    }, 3000);
+    // Touch bittikten 5 saniye sonra tekrar başlat
+    setTimeout(() => setIsUserInteracting(false), 5000);
   }, []);
 
   if (!slides.length) {
@@ -133,12 +137,13 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
               <div key={slide.id} className="embla__slide flex-[0_0_100%] min-w-0 relative h-full rounded-xl md:rounded-2xl overflow-hidden shadow-sm md:shadow-lg">
                 {/* RESPONSIVE GÖRSEL */}
                 <div className="absolute inset-0">
-                  {slide.desktopImageUrl ? (
+                  {slide.desktopImageUrl || slide.mobileImageUrl ? (
                     <>
                       {/* Desktop görsel - Daha yüksek kalite ve optimize boyutlar */}
-                      <Image
-                        src={slide.desktopImageUrl}
-                        alt={slide.alt || "Slide"}
+                      {slide.desktopImageUrl && (
+                        <Image
+                          src={slide.desktopImageUrl}
+                          alt={slide.alt || "Slide"}
                         fill
                         sizes="(min-width: 1024px) 84vw, (min-width: 768px) 90vw, 92vw"
                         priority={index === 0}
@@ -153,7 +158,8 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
                         placeholder="blur"
                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                         className="hidden md:block"
-                      />
+                        />
+                      )}
                       {/* Mobil görsel - Optimize edilmiş boyutlar */}
                       {slide.mobileImageUrl && (
                         <Image
@@ -176,7 +182,7 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
                         />
                       )}
                       {/* Mobil görsel yoksa desktop görseli göster - Optimize edilmiş */}
-                      {!slide.mobileImageUrl && (
+                      {!slide.mobileImageUrl && slide.desktopImageUrl && (
                         <Image
                           src={slide.desktopImageUrl}
                           alt={slide.alt || "Slide"}
@@ -233,35 +239,6 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
         </div>
       )}
 
-      {/* Otomatik kayma kontrolü */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-30">
-        <button
-          onClick={() => setIsPlaying(!isPlaying)}
-          className={cn(
-            "flex items-center gap-2 px-3 py-2 rounded-full",
-            "bg-black/20 backdrop-blur-md text-white",
-            "hover:bg-black/30 transition-all duration-200",
-            "text-sm font-medium"
-          )}
-          aria-label={isPlaying ? "Otomatik kaymayı durdur" : "Otomatik kaymayı başlat"}
-        >
-          {isPlaying ? (
-            <>
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-              </svg>
-              <span className="hidden sm:inline">Durdur</span>
-            </>
-          ) : (
-            <>
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-              <span className="hidden sm:inline">Oynat</span>
-            </>
-          )}
-        </button>
-      </div>
 
       {/* Quick Actions Rail */}
       <QuickActionsRail />
