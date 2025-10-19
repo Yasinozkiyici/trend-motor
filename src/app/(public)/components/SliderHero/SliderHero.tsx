@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { SliderHeroSlide, SliderHeroSettings } from '../home-hero-provider';
 import QuickActionsRail from './QuickActionsRail';
-import { ProgressBar } from './ProgressBar';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
@@ -19,9 +18,7 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
     skipSnaps: false,
   });
 
-  const [isPlaying, setIsPlaying] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [progress, setProgress] = useState(0);
   const [isUserInteracting, setIsUserInteracting] = useState(false);
 
   const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
@@ -51,7 +48,6 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
 
     const onSelect = () => {
       setCurrentSlide(emblaApi.selectedScrollSnap());
-      setProgress(0);
     };
 
     emblaApi.on('select', onSelect);
@@ -66,27 +62,14 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
   useEffect(() => {
     if (!emblaApi || isUserInteracting) return;
 
-    let startTime = Date.now();
-    const duration = 6000; // 6 saniye
-
-    const updateProgress = () => {
-      if (isUserInteracting) return; // Kullanıcı etkileşimdeyse durdur
-      
-      const elapsed = Date.now() - startTime;
-      const progressPercent = Math.min((elapsed / duration) * 100, 100);
-      setProgress(progressPercent);
-
-      if (progressPercent >= 100) {
+    const autoScroll = setInterval(() => {
+      if (!isUserInteracting) {
         emblaApi.scrollNext();
-        startTime = Date.now();
-        setProgress(0);
       }
-    };
+    }, 6000); // 6 saniye
 
-    const interval = setInterval(updateProgress, 50); // Her 50ms'de güncelle
-
-    return () => clearInterval(interval);
-  }, [emblaApi, isUserInteracting, currentSlide]);
+    return () => clearInterval(autoScroll);
+  }, [emblaApi, isUserInteracting]);
 
   // Mouse hover'da otomatik kaymayı duraklat
   const handleMouseEnter = useCallback(() => {
@@ -204,14 +187,15 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
                       )}
                     </>
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                    <div className="w-full h-full bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
                       <div className="text-center">
-                        <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center mx-auto mb-3">
-                          <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="w-20 h-20 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                          <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
                         </div>
-                        <span className="text-gray-500 text-sm font-medium">Görsel yüklenemedi</span>
+                        <span className="text-blue-600 text-base font-medium">Görsel yükleniyor...</span>
+                        <p className="text-blue-500 text-sm mt-2">Lütfen bekleyin</p>
                       </div>
                     </div>
                   )}
@@ -230,14 +214,6 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
         </div>
       </div>
       
-      {/* Progress Bar */}
-      {slides.length > 1 && (
-        <div className="absolute bottom-16 left-0 right-0 z-30">
-          <div className="mx-auto max-w-md px-4">
-            <ProgressBar progress={progress} className="bg-black/20" />
-          </div>
-        </div>
-      )}
 
 
       {/* Quick Actions Rail */}

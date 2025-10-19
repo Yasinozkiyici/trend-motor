@@ -104,6 +104,7 @@ async function getHomeHeroData(): Promise<SliderHeroData | null> {
               getSignedUrl(slide.mobile_image_path ?? ''),
             ]);
 
+
             return {
               id: slide.id,
               eyebrow: slide.eyebrow,
