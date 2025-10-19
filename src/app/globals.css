@@ -24,3 +24,68 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Embla Carousel CSS */
+.embla {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+}
+
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+/* Brand Logo Sizes */
+.brand-logo-kanuni {
+  width: 229px;
+  height: 57px;
+}
+
+.brand-logo-bajaj {
+  width: 220px;
+  height: 55px;
+}
+
+.brand-logo-spare {
+  width: 205px;
+  height: 49px;
+}
+
+/* Responsive brand logos */
+@media (max-width: 768px) {
+  .brand-logo-kanuni {
+    width: 183px; /* ~80% of original */
+    height: 46px;
+  }
+  
+  .brand-logo-bajaj {
+    width: 176px; /* ~80% of original */
+    height: 44px;
+  }
+  
+  .brand-logo-spare {
+    width: 164px; /* ~80% of original */
+    height: 39px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-logo-kanuni {
+    width: 137px; /* ~60% of original */
+    height: 34px;
+  }
+  
+  .brand-logo-bajaj {
+    width: 132px; /* ~60% of original */
+    height: 33px;
+  }
+  
+  .brand-logo-spare {
+    width: 123px; /* ~60% of original */
+    height: 29px;
+  }
+}
