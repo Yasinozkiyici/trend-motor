@@ -35,6 +35,97 @@
     outline: 2px solid #3b82f6;
     outline-offset: 2px;
   }
+
+  /* Mobile-specific improvements */
+  .mobile-optimized {
+    /* Better spacing for mobile */
+    padding: 1rem;
+    margin: 0.5rem 0;
+  }
+
+  /* Mobile typography improvements */
+  h1 {
+    font-size: 1.875rem; /* 30px */
+    line-height: 2.25rem; /* 36px */
+  }
+
+  h2 {
+    font-size: 1.5rem; /* 24px */
+    line-height: 2rem; /* 32px */
+  }
+
+  h3 {
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.75rem; /* 28px */
+  }
+
+  /* Mobile button improvements */
+  .btn-mobile {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 0.75rem;
+    min-height: 48px;
+  }
+
+  /* Mobile card improvements */
+  .card-mobile {
+    border-radius: 1rem;
+    padding: 1.25rem;
+    margin: 0.75rem 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Mobile form improvements */
+  .form-mobile input,
+  .form-mobile textarea,
+  .form-mobile select {
+    padding: 0.875rem;
+    font-size: 1rem;
+    border-radius: 0.75rem;
+    border: 2px solid #e5e7eb;
+  }
+
+  .form-mobile input:focus,
+  .form-mobile textarea:focus,
+  .form-mobile select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  /* Mobile navigation improvements */
+  .nav-mobile {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  /* Mobile image optimizations */
+  .img-mobile {
+    border-radius: 0.75rem;
+    object-fit: cover;
+  }
+
+  /* Mobile spacing utilities */
+  .mobile-px {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .mobile-py {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .mobile-mx {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  .mobile-my {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
 }
 
 @theme inline {
@@ -71,23 +162,36 @@ body {
   min-width: 0;
 }
 
-/* Brand Logo Sizes */
+
+/* Brand Logo Sizes - Optimized for cross-browser compatibility */
 .brand-logo-kanuni {
   width: 229px;
   height: 57px;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 
 .brand-logo-bajaj {
   width: 220px;
   height: 55px;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 
 .brand-logo-spare {
   width: 205px;
   height: 49px;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 
-/* Responsive brand logos */
+/* Responsive brand logos - Cross-browser optimized */
 @media (max-width: 768px) {
   .brand-logo-kanuni {
     width: 183px; /* ~80% of original */
@@ -120,4 +224,19 @@ body {
     width: 123px; /* ~60% of original */
     height: 29px;
   }
+}
+
+/* Cross-browser logo compatibility fixes */
+img[src$=".png"], img[src$=".jpg"], img[src$=".jpeg"] {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: optimize-contrast;
+}
+
+/* Fallback for older browsers */
+.brand-logo-kanuni,
+.brand-logo-bajaj,
+.brand-logo-spare {
+  display: block;
+  margin: 0 auto;
 }

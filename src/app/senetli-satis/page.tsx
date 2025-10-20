@@ -1,3 +1,4 @@
+import Link from 'next/link';
 export default function SenetliSatisPage() {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -132,18 +133,18 @@ export default function SenetliSatisPage() {
               Başlamaya Hazır mısınız?
             </h3>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-              <a
+              <Link
                 href="/modeller"
                 className="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
               >
                 Modelleri İncele
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/kredi"
                 className="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-medium hover:bg-blue-50 transition-colors"
               >
                 Kredi Başvurusu
-              </a>
+              </Link>
             </div>
           </div>
         </div>

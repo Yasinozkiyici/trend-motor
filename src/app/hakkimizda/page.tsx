@@ -1,3 +1,4 @@
+import Link from 'next/link';
 export default function HakkimizdaPage() {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -67,18 +68,18 @@ export default function HakkimizdaPage() {
               Sorularınız için bize ulaşın. Size en kısa sürede dönüş yapalım.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-              <a
+              <Link
                 href="/iletisim"
                 className="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
               >
                 İletişim
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/modeller"
                 className="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-medium hover:bg-blue-50 transition-colors"
               >
                 Modelleri İncele
-              </a>
+              </Link>
             </div>
           </div>
         </div>

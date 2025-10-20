@@ -8,13 +8,13 @@ import { Button } from '@/components/ui/button';
 import MotorForm from '../_components/motor-form';
 
 type AdminMotorsEditPageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 export default async function AdminMotorsEditPage({ params }: AdminMotorsEditPageProps) {
   await requireAdmin();
 
-  const { id } = params;
+  const { id } = await params;
   const supabase = createServiceRoleClient();
 
   const [{ data: motor, error: motorError }, { data: brands }] = await Promise.all([

@@ -95,7 +95,7 @@ export default function NewsletterSection() {
               <a href="/gizlilik-politikasi" className="text-white hover:text-slate-200 transition-colors underline decoration-slate-400 hover:decoration-white">
                 Gizlilik Politikamızı
               </a>{' '}
-              kabul etmiş olursunuz. Çıkmak için e-postalarımızdaki "Aboneliği İptal Et" linkini tıklayın.
+              kabul etmiş olursunuz. Çıkmak için e-postalarımızdaki &quot;Aboneliği İptal Et&quot; linkini tıklayın.
             </p>
           </div>
         </div>

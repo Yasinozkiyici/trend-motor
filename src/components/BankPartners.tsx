@@ -1,16 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
 
 const BankPartners = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
-
   const banks = [
     { id: 1, name: 'İş Bankası', logo: '/bank1.png' },
     { id: 2, name: 'Garanti BBVA', logo: '/bank2.png' },
@@ -53,14 +45,7 @@ const BankPartners = () => {
             {banks.map((bank, index) => (
               <div
                 key={bank.id}
-                className={`flex-shrink-0 group transition-all duration-700 ease-out ${
-                  isVisible 
-                    ? 'opacity-100 translate-y-0' 
-                    : 'opacity-0 translate-y-6'
-                }`}
-                style={{
-                  transitionDelay: `${index * 80}ms`
-                }}
+                className="flex-shrink-0 group transition-all duration-300 ease-out opacity-100"
               >
                 <div className="relative w-24 h-16 lg:w-28 lg:h-18 bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-2 border border-gray-100 hover:border-blue-200 overflow-hidden">
                   <Image

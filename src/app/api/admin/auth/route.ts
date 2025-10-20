@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
     const { password } = await request.json();
 
     // Basit şifre kontrolü (production'da daha güvenli olmalı)
-    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+    const adminPassword = process.env.ADMIN_PASSWORD || 'Yasin.4595';
 
     if (password === adminPassword) {
       // Şifre doğruysa session cookie'si oluştur

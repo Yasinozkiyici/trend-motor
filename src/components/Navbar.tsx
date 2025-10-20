@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Search, Wrench, X } from 'lucide-react';
+import { Search, Wrench, X, Menu } from 'lucide-react';
 
 interface NavbarProps {
   cartCount?: number;
@@ -13,6 +13,7 @@ interface NavbarProps {
 export default function Navbar({ cartCount: _cartCount = 0 }: NavbarProps) {
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
 
@@ -67,10 +68,18 @@ export default function Navbar({ cartCount: _cartCount = 0 }: NavbarProps) {
                     <Image
                       src={brand.src}
                       alt={brand.alt}
-                      width={32}
-                      height={32}
-                      className="h-8 w-auto"
+                      width={120}
+                      height={30}
+                      className="h-8 w-auto max-h-8"
                       quality={100}
+                      sizes="(max-width: 1200px) 100px, 120px"
+                      style={{
+                        width: 'auto',
+                        height: 'auto',
+                        maxWidth: '120px',
+                        maxHeight: '32px',
+                      }}
+                      unoptimized
                     />
                   </Link>
                 ))}
@@ -140,88 +149,74 @@ export default function Navbar({ cartCount: _cartCount = 0 }: NavbarProps) {
               <Image
                 src="/logo.svg"
                 alt="Trend Motor"
-                width={40}
-                height={40}
-                className="h-10 w-auto"
+                width={48}
+                height={48}
+                className="h-12 w-auto"
                 priority
                 quality={100}
+                sizes="(max-width: 480px) 40px, 48px"
+                style={{
+                  width: 'auto',
+                  height: 'auto',
+                  maxWidth: '100%',
+                }}
               />
             </Link>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <button
-                onClick={() => setIsMobileSearchOpen((prev) => !prev)}
-                className="inline-flex size-11 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 transition-all duration-200 hover:bg-gray-50 hover:border-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 shadow-sm"
-                aria-label={isMobileSearchOpen ? 'Aramayı kapat' : 'Aramayı aç'}
+                onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+                className="inline-flex size-12 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 transition-all duration-200 hover:bg-gray-50 hover:border-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 shadow-sm"
+                aria-label={isMobileMenuOpen ? 'Menüyü kapat' : 'Menüyü aç'}
+                aria-expanded={isMobileMenuOpen}
+                aria-controls="mobile-menu-panel"
               >
-                {isMobileSearchOpen ? <X className="size-5" aria-hidden="true" /> : <Search className="size-5" aria-hidden="true" />}
-              </button>
-
-              <Link
-                href="/servis-noktalari"
-                className="inline-flex size-11 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 transition-all duration-200 hover:bg-gray-50 hover:border-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 shadow-sm"
-                aria-label="Servis noktaları"
-              >
-                <Wrench className="size-5" aria-hidden="true" />
-              </Link>
-
-              <button
-                onClick={() => setIsLanguageOpen((prev) => !prev)}
-                aria-label="Dil seçimi"
-                aria-expanded={isLanguageOpen}
-                className="inline-flex size-11 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 transition-all duration-200 hover:bg-gray-50 hover:border-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 shadow-sm"
-              >
-                <Image
-                  src="/flag-tr.svg"
-                  alt="Türkçe"
-                  width={22}
-                  height={22}
-                  className="h-5.5 w-auto rounded-sm object-cover"
-                />
+                {isMobileMenuOpen ? <X className="size-6" aria-hidden="true" /> : <Menu className="size-6" aria-hidden="true" />}
               </button>
             </div>
           </div>
 
-          {isMobileSearchOpen && (
-            <div className="pb-4">
-              <form onSubmit={handleSearch} className="relative">
-                <label htmlFor="mobile-search" className="sr-only">
-                  Motosiklet ara
-                </label>
-                <div className="relative">
-                  <input
-                    id="mobile-search"
-                    type="search"
-                    value={searchQuery}
-                    onChange={(event) => setSearchQuery(event.target.value)}
-                    placeholder="Motosiklet ara..."
-                    className="h-12 w-full rounded-2xl border-2 border-gray-200 bg-white pl-5 pr-12 text-base text-gray-900 placeholder:text-gray-500 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-600/20 shadow-sm"
-                    autoFocus
-                  />
-                  <button
-                    type="submit"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 transition-colors hover:text-blue-600 p-1 rounded-full hover:bg-blue-50"
-                    aria-label="Ara"
+          {isMobileMenuOpen && (
+            <div id="mobile-menu-panel" className="pb-4">
+              <nav className="space-y-2 rounded-2xl border border-gray-200 bg-white p-4 shadow-md">
+                <Link href="/" className="block rounded-xl px-4 py-3 text-gray-900 hover:bg-gray-50">Ana Sayfa</Link>
+                <Link href="/modeller" className="block rounded-xl px-4 py-3 text-gray-900 hover:bg-gray-50">Modeller</Link>
+                <Link href="/senetli-satis" className="block rounded-xl px-4 py-3 text-gray-900 hover:bg-gray-50">Senetli Satış</Link>
+                <Link href="/kredi" className="block rounded-xl px-4 py-3 text-gray-900 hover:bg-gray-50">Kredi</Link>
+                <Link href="/servis" className="block rounded-xl px-4 py-3 text-gray-900 hover:bg-gray-50">Servis</Link>
+                <Link href="/iletisim" className="block rounded-xl px-4 py-3 text-gray-900 hover:bg-gray-50">İletişim</Link>
+              </nav>
+
+              <div className="mt-4 flex items-center gap-3 overflow-x-auto scrollbar-hide">
+                {brandLinks.map((brand) => (
+                  <Link
+                    key={brand.alt}
+                    href={brand.href}
+                    className="inline-flex items-center justify-center rounded-full border border-gray-200 bg-white p-3 transition-colors hover:bg-gray-50 min-w-fit"
+                    aria-label={brand.alt}
+                    onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    <Search className="size-5" aria-hidden="true" />
-                  </button>
-                </div>
-              </form>
+                    <Image
+                      src={brand.src}
+                      alt={brand.alt}
+                      width={80}
+                      height={20}
+                      className="h-5 w-auto max-h-5"
+                      priority
+                      sizes="(max-width: 480px) 60px, 80px"
+                      style={{
+                        width: 'auto',
+                        height: 'auto',
+                        maxWidth: '80px',
+                        maxHeight: '20px',
+                      }}
+                      unoptimized
+                    />
+                  </Link>
+                ))}
+              </div>
             </div>
           )}
-
-          <div className="flex items-center gap-3 overflow-x-auto pb-4 scrollbar-hide">
-            {brandLinks.map((brand) => (
-              <Link
-                key={brand.alt}
-                href={brand.href}
-                className="inline-flex items-center justify-center rounded-full border border-gray-200 bg-white p-3 transition-colors hover:bg-gray-50 min-w-fit"
-                aria-label={brand.alt}
-              >
-                <Image src={brand.src} alt={brand.alt} width={32} height={32} className="h-8 w-auto" />
-              </Link>
-            ))}
-          </div>
         </div>
       </div>
 

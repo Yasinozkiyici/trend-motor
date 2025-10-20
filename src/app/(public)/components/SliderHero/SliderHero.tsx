@@ -100,8 +100,8 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
     <section 
       className={cn(
         "relative w-full overflow-hidden",
-        "h-[55vh] sm:h-[65vh] md:h-[75vh] lg:h-[85vh] xl:h-[816px]", // Daha iyi responsive yükseklikler
-        "bg-white" // Beyaz arkaplan
+        "h-[500px] sm:h-[600px] md:h-[700px] lg:h-[800px]", // Sabit yükseklikler
+        "bg-gradient-to-br from-slate-50 to-slate-100"
       )}
       role="region"
       aria-label="Anasayfa vitrin"
@@ -119,54 +119,54 @@ export default function SliderHero({ slides, settings }: SliderHeroProps) {
           <div className="embla__container h-full flex">
             {slides.map((slide, index) => (
                 <div key={slide.id} className="embla__slide flex-[0_0_100%] min-w-0 relative h-full rounded-xl md:rounded-2xl overflow-hidden shadow-sm md:shadow-lg">
-                  {/* RESPONSIVE GÖRSEL */}
-                  <div className="absolute inset-0">
+                  {/* RESPONSIVE GÖRSEL - FULL SIZE */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-slate-100">
                     {slide.desktopImageUrl || slide.mobileImageUrl ? (
                     <>
                       {/* Desktop görsel */}
                       {slide.desktopImageUrl && (
-                        <img
-                          src={slide.desktopImageUrl}
-                          alt={slide.alt || "Slide"}
-                          className="hidden md:block w-full h-full object-cover object-center"
-                          style={{ 
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            width: "100%",
-                            height: "100%"
-                          }}
-                        />
+                        <div className="hidden md:block w-full h-full relative">
+                          <Image
+                            src={slide.desktopImageUrl}
+                            alt={slide.alt || "Slide"}
+                            fill
+                            sizes="100vw"
+                            className="object-cover object-center"
+                            priority={index === 0}
+                            quality={90}
+                            unoptimized
+                          />
+                        </div>
                       )}
                       {/* Mobil görsel */}
                       {slide.mobileImageUrl && (
-                        <img
-                          src={slide.mobileImageUrl}
-                          alt={slide.alt || "Slide"}
-                          className="block md:hidden w-full h-full object-cover object-center"
-                          style={{ 
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            width: "100%",
-                            height: "100%"
-                          }}
-                        />
+                        <div className="block md:hidden w-full h-full relative">
+                          <Image
+                            src={slide.mobileImageUrl}
+                            alt={slide.alt || "Slide"}
+                            fill
+                            sizes="100vw"
+                            className="object-cover object-center"
+                            priority={index === 0}
+                            quality={90}
+                            unoptimized
+                          />
+                        </div>
                       )}
                       {/* Mobil görsel yoksa desktop görseli göster */}
                       {!slide.mobileImageUrl && slide.desktopImageUrl && (
-                        <img
-                          src={slide.desktopImageUrl}
-                          alt={slide.alt || "Slide"}
-                          className="block md:hidden w-full h-full object-cover object-center"
-                          style={{ 
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            width: "100%",
-                            height: "100%"
-                          }}
-                        />
+                        <div className="block md:hidden w-full h-full relative">
+                          <Image
+                            src={slide.desktopImageUrl}
+                            alt={slide.alt || "Slide"}
+                            fill
+                            sizes="100vw"
+                            className="object-cover object-center"
+                            priority={index === 0}
+                            quality={90}
+                            unoptimized
+                          />
+                        </div>
                       )}
                     </>
                   ) : (

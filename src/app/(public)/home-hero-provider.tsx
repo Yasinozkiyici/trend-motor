@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import Link from 'next/link';
 import { unstable_cache } from 'next/cache';
 import { createStaticClient } from '@/lib/supabase/server';
 import { getSignedUrl } from '@/lib/images';
@@ -158,8 +159,30 @@ export default async function HomeHeroProvider({
 
   return (
     <>
-      {data && data.slides.length > 0 && (
+      {data && data.slides.length > 0 ? (
         <SliderHero slides={data.slides} settings={data.settings} />
+      ) : (
+        <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+            <div className="max-w-2xl">
+              <p className="text-blue-200 mb-3">Trend Motor</p>
+              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4">
+                Hayalinizdeki motosiklete şimdi daha yakınsınız
+              </h1>
+              <p className="text-blue-100 text-lg mb-8">
+                BAJAJ ve diğer markalarda senetli satış, kredi başvurusu ve test sürüşü imkanları.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link href="/modeller" className="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 font-semibold text-gray-900 hover:bg-gray-100">
+                  Modelleri Keşfet
+                </Link>
+                <Link href="/iletisim" className="inline-flex items-center justify-center rounded-xl border-2 border-white px-6 py-3 font-semibold text-white hover:bg-white hover:text-gray-900">
+                  İletişime Geç
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
       )}
       <BankPartners />
       {children}

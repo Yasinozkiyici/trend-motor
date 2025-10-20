@@ -22,7 +22,7 @@ const brandConfig = {
     className: 'brand-logo-bajaj',
   },
   spare: {
-    src: '/spare.svg',
+    src: '/yedek-parca.svg',
     alt: 'Yedek Parça',
     className: 'brand-logo-spare',
   },
@@ -40,6 +40,16 @@ export default function BrandLogo({ brand, className = '', alt }: BrandLogoProps
       className={`${config.className} ${className}`}
       priority
       quality={100}
+      sizes="(max-width: 480px) 123px, (max-width: 768px) 164px, 229px"
+      style={{
+        width: 'auto',
+        height: 'auto',
+        maxWidth: '100%',
+        maxHeight: '100%',
+        objectFit: 'contain',
+        objectPosition: 'center',
+      }}
+      unoptimized
     />
   );
 }

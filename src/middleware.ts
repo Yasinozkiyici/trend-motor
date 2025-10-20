@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
     
     if (!adminAuth || adminAuth.value !== 'authenticated') {
       // Cookie yoksa login sayfasına yönlendir
-      return NextResponse.redirect(new URL('/admin-login', request.url));
+      return NextResponse.redirect(new URL('/ozkiyici45', request.url));
     }
   }
 

@@ -1,62 +1,7 @@
-'use client';
-
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FooterLinks } from '@/types';
 
 export default function Footer() {
-  const [footerLinks, setFooterLinks] = useState<FooterLinks | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchFooterLinks();
-  }, []);
-
-  const fetchFooterLinks = async () => {
-    try {
-      const response = await fetch('/api/footer-links');
-      const result = await response.json();
-      if (result.success) {
-        setFooterLinks(result.data);
-      }
-    } catch (error) {
-      console.error('Error fetching footer links:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const socialIcons = {
-    instagram: '📷',
-    facebook: '📘',
-    youtube: '📺',
-    twitter: '🐦',
-    sahibinden: '🏠'
-  };
-
-  if (loading) {
-    return (
-      <footer className="bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="animate-pulse">
-            <div className="h-8 bg-gray-700 rounded w-1/4 mb-4"></div>
-            <div className="h-4 bg-gray-700 rounded w-1/2 mb-8"></div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="space-y-2">
-                  <div className="h-4 bg-gray-700 rounded w-3/4"></div>
-                  <div className="h-3 bg-gray-700 rounded w-1/2"></div>
-                  <div className="h-3 bg-gray-700 rounded w-2/3"></div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </footer>
-    );
-  }
-
   return (
     <footer className="bg-gray-900 text-white">
       {/* Ana Footer İçeriği */}
@@ -192,24 +137,37 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Footer Links */}
-          {footerLinks?.columns && footerLinks.columns.map((column, index) => (
-            <div key={index}>
-              <h4 className="font-semibold mb-4">{column.title}</h4>
-              <ul className="space-y-2">
-                {column.links.map((link, linkIndex) => (
-                  <li key={linkIndex}>
-                    <Link
-                      href={link.href}
-                      className="text-gray-400 hover:text-white transition-colors text-sm"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Hızlı Linkler */}
+          <div>
+            <h4 className="font-semibold mb-4">Hızlı Linkler</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/modeller" className="text-gray-400 hover:text-white transition-colors text-sm">
+                  Modeller
+                </Link>
+              </li>
+              <li>
+                <Link href="/senetli-satis" className="text-gray-400 hover:text-white transition-colors text-sm">
+                  Senetli Satış
+                </Link>
+              </li>
+              <li>
+                <Link href="/kredi" className="text-gray-400 hover:text-white transition-colors text-sm">
+                  Kredi Başvurusu
+                </Link>
+              </li>
+              <li>
+                <Link href="/test-surusu" className="text-gray-400 hover:text-white transition-colors text-sm">
+                  Test Sürüşü
+                </Link>
+              </li>
+              <li>
+                <Link href="/servis" className="text-gray-400 hover:text-white transition-colors text-sm">
+                  Servis
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
 
         {/* Bottom Bar */}

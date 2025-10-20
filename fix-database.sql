@@ -49,3 +49,4 @@ INSERT INTO public.motorcycles (
   ARRAY['Yeni Model', 'Özel Fiyat'],
   1
 ) ON CONFLICT (slug) DO NOTHING;
+
